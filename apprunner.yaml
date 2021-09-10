@@ -1,0 +1,22 @@
+version: '3'
+services:
+  reearth:
+    image: reearth/reearth:nightly
+    environment:
+      REEARTH_DB: mongodb://reearth-mongo
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+    links:
+      - reearth-mongo
+    depends_on:
+      - reearth-mongo
+    volumes:
+      - ./data:/reearth/data
+  reearth-mongo:
+    image: mongo:4.2.0-bionic
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo:/data/db
